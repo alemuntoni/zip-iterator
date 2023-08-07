@@ -1,5 +1,5 @@
-#ifndef ZIP_ITERATOR_ZIP_TUPLE_HPP
-#define ZIP_ITERATOR_ZIP_TUPLE_HPP
+#ifndef ZIP_VIEW_HPP
+#define ZIP_VIEW_HPP
 
 #include <cassert>
 #include <functional>
@@ -117,7 +117,7 @@ private:
 } // namespace c9::detail
 
 
-#ifdef ZIP_ITERATOR_DO_HACK_INTO_STD_VIEWS
+#ifdef ZIP_VIEW_INJECT_STD_VIEWS_NAMESPACE
 namespace std::ranges::views {
 #else
 namespace c9 {
@@ -131,4 +131,4 @@ auto zip(T && ... t)
 
 }
 
-#endif // ZIP_ITERATOR_ZIP_TUPLE_HPP
+#endif // ZIP_VIEW_HPP

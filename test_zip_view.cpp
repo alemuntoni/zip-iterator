@@ -1,16 +1,8 @@
 
-#define ZIP_ITERATOR_DO_HACK_INTO_STD_VIEWS
-#include "zip_tuple.hpp"
+#define ZIP_VIEW_INJECT_STD_VIEWS_NAMESPACE
+#include "zip_view.hpp"
 
 #include <cassert>
-#include <iostream>
-
-#include <iostream>
-#include <memory>
-#include <type_traits>
-
-#include <cxxabi.h>
-
 
 auto main() -> int 
 {
