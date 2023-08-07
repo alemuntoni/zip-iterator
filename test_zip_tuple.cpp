@@ -1,3 +1,5 @@
+
+#define ZIP_ITERATOR_DO_HACK_INTO_STD_VIEWS
 #include "zip_tuple.hpp"
 
 #include <cassert>
@@ -17,7 +19,7 @@ auto main() -> int
     auto c = std::vector<int>{0, 0, 0, 0, 0};
     auto const & d = b;
 
-    for (auto && [x, y, z] : c9::zip(a, d, c)) {
+    for (auto && [x, y, z] : std::views::zip(a, d, c)) {
         z = x + y;
         x++;
     }
@@ -32,7 +34,7 @@ auto main() -> int
     auto l = std::list<int>{1, 2, 3, 4, 5, 6};
 
     std::list<int> res;
-    for (auto && [x, y] : c9::zip(a, l)) {
+    for (auto && [x, y] : std::views::zip(a, l)) {
         res.push_back(x + y);
     }
 
@@ -42,13 +44,13 @@ auto main() -> int
 
     std::vector<bool> res_even = {false, false, false, false, false, true};
 
-    for (auto && [x, y] : c9::zip(res, res_even)) {
+    for (auto && [x, y] : std::views::zip(res, res_even)) {
         assert((x % 2 == 0) == y);
     }
 
     std::vector<bool> res_neg(6, false);
 
-    for (auto && [x, y] : c9::zip(res_even, res_neg)) {
+    for (auto && [x, y] : std::views::zip(res_even, res_neg)) {
         y = !x;
     }
 

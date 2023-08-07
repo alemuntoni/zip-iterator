@@ -1,3 +1,6 @@
+#ifndef ZIP_ITERATOR_ZIP_TUPLE_HPP
+#define ZIP_ITERATOR_ZIP_TUPLE_HPP
+
 #include <cassert>
 #include <functional>
 #include <iomanip>
@@ -8,8 +11,7 @@
 #include <typeinfo>
 #include <ranges>
 
-
-namespace c9 {
+namespace c9::detail {
 
 template <typename ... Args, std::size_t ... Index>
 auto any_match_impl(std::tuple<Args...> const & lhs,
@@ -31,7 +33,7 @@ auto any_match(std::tuple<Args...> const & lhs, std::tuple<Args...> const & rhs)
 
 
 
-template <std::ranges::range ... Rng>
+template <std::ranges::viewable_range ... Rng>
 class zip_iterator
 {
 public:
@@ -82,7 +84,7 @@ private:
     std::tuple<std::ranges::iterator_t<Rng>...> m_iters;
 };
 
-template <std::ranges::range ... T>
+template <std::ranges::viewable_range ... T>
 class zipper
 {
 public:
@@ -112,11 +114,21 @@ private:
 
 };
 
+} // namespace c9::detail
 
-template <std::ranges::range ... T>
+
+#ifdef ZIP_ITERATOR_DO_HACK_INTO_STD_VIEWS
+namespace std::ranges::views {
+#else
+namespace c9 {
+#endif
+
+template <std::ranges::viewable_range ... T>
 auto zip(T && ... t)
 {
-    return zipper<T ...>{std::forward<T>(t)...};
+    return c9::detail::zipper<T ...>{std::forward<T>(t)...};
 }
 
 }
+
+#endif // ZIP_ITERATOR_ZIP_TUPLE_HPP
